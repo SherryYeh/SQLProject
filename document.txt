@@ -1,0 +1,452 @@
+
+1.先clone到一個空資料夾
+2.將sqlproject放到\xampp\htdocs\
+
+
+game
+    - select
+        ./game
+        response: 
+            [{
+                "id":"1",
+                "name":"abc",
+                "soldOutNumber":0,
+                "price":"12",
+                "picture":"aws",
+                "description":"wew",
+                "tag":"action"
+            }]
+        ./game/{id}
+        response: 
+            [{
+                "id":"1",
+                "name":"abc",
+                "soldOutNumber":0,
+                "price":"12",
+                "picture":"aws",
+                "description":"wew",
+                "tag":"action"
+            }]
+            if is not manager
+            [{
+                "id":"1",
+                "name":"abc",
+                "soldOutNumber":0,
+                "price":"12",
+                "picture":"aws",
+                "description":"wew",
+                "tag":"action"
+                "hasGame":0
+            }]
+    - insert
+        ./game
+        request:
+        {
+            name:
+            price:
+            picture:(url)
+            description:
+            tag:"action"
+        }
+        or
+        {
+            name:
+            price:
+            picture:(url)
+            description:
+            tagid:1
+        }
+        response:
+            {insert_id}
+    - update
+        ./game/{id}
+        request
+        [
+            {
+                "id": "2",
+                "name": "Hollow Knight",
+                "price": "111",
+                "picture": "https://cdn.cloudflare.steamstatic.com/steam/",
+                "description": "Forge your own path in Hollow Knight! An epic action adventure through a vast ruined kingdom of insects and heroes. Explore twisting caverns, battle tainted creatures and befriend bizarre bugs, all in a classic, hand-drawn 2D style.",
+                "tag": "abc"
+            }
+        ]
+    - delete
+        ./game/{id}
+review
+    - select
+        ./review
+        ./review/{id}
+        response: 
+        [
+            {
+                "id": "2",
+                "gameId": "1",
+                "memberId": "1",
+                "star": "0",
+                "context": "wwww",
+                "datetime": "0000-00-00 00:00:00"
+            }
+        ]
+        ./review/gameid/{gameid}
+            [
+                {
+                    "id": "10",
+                    "gameId": "41",
+                    "memberId": "30",
+                    "star": "4",
+                    "context": "abdsdef",
+                    "datetime": "2021-01-10 14:26:50",
+                    "replyid": "",
+                    "replycontext": "",
+                    "replydatetime": "",
+                    "memberpicture": "",
+                    "membername": ""
+                }
+            ]
+    - insert
+        ./review
+        request:
+        [{
+            "gameid":16,
+            "star":5,
+            "context":"aaa"
+        }]
+        response:
+            {insert_id}
+    - update
+        ./review/{id}
+    - delete
+        ./review/{id}
+reply
+- select
+        ./reply
+        ./reply/{reply_id}
+        response: 
+        [
+            {
+                "id": "7",
+                "reviewid": "10",
+                "context": "avefw",
+                "datetime": "2021-01-10 14:26:50",
+                "managername": "rtr",
+                "managerpicture": "wef"
+            }
+        ]
+    
+    - insert
+        ./reply
+        request:
+        [{
+            "reviewid":16,
+            "context":"aaa"
+        }]
+        response:
+            {insert_id}
+    - update
+        ./reply/{id}
+    - delete
+        ./reply/{id}
+tag
+
+wishlist
+    - select
+        response:
+        [
+            {
+                "id": "1",
+                "gameid": "1",
+                "name": "Gris",
+                "price": "310",
+                "picture": "https://cdn.cloudflare.steamstatic.com/steam/apps/683320/header.jpg?t=1574359986",
+                "description": "Gris是一個充滿希望的小姑娘，她由於生活中痛苦的經歷而迷失在自己的世界裡。",
+                "tagid": "1",
+                "tag": "action",
+                "saveDatetime": "2021-01-06 07:07:28"
+            },
+            {
+                "id": "2",
+                "gameid": "1",
+                "name": "Gris",
+                "price": "310",
+                "picture": "https://cdn.cloudflare.steamstatic.com/steam/apps/683320/header.jpg?t=1574359986",
+                "description": "Gris是一個充滿希望的小姑娘，她由於生活中痛苦的經歷而迷失在自己的世界裡。",
+                "tagid": "1",
+                "tag": "action",
+                "saveDatetime": "2021-01-06 07:07:40"
+            }
+        ]
+    - insert
+        require
+        [
+            {
+                "gameid":1
+            }
+        ]
+        respone 
+            {gameid}
+            ex:
+            4  -  表示wishlist.id = 4
+    -update
+        ./wisthlist/{wishlist_id}    //ex:./wisthlist/1 -> wishlist_id=1
+        require
+            [
+                {
+                    "gameid":1
+                }
+            ]
+    -delete
+        ./wisthlist/{wishlist_id}    //ex:./wisthlist/1 -> wishlist_id=1
+shoppinfliststate
+
+shoppinglist/cart
+- select
+        ./shoppinglist/cart
+        ./shoppinglist/cart/total
+        ./shoppinglist/cart/{id}
+        response: 
+            [
+                {
+                    "id": "1",
+                    "gameid": "1",
+                    "name": "abc",
+                    "price": "123",
+                    "quantity": "1"
+                },
+                {
+                    "id": "2",
+                    "gameid": "2",
+                    "name": "12",
+                    "price": "111",
+                    "quantity": "3"
+                }
+            ]
+    - insert
+        ./shoppinglist/cart
+        ex:
+            [
+                {
+                "quantity":3,"gameId":2
+                }
+            ]
+        response:
+            {insert_id}
+    - update
+        ./shoppinglist/cart/{id}
+    - delete
+        ./shoppinglist/cart/{id}
+shoppinglist
+    - select
+        ./shoppinglist
+        ./shoppinglist/{id}
+        response: 
+            [
+                {
+                    "id": "20",
+                    "stateid": "3",
+                    "address": "abd",
+                    "buyDatetime": "2021-01-11 12:03:42",
+                    "memberid": "29",
+                    "couponid": null,
+                    "phone": "32429",
+                    "hash": null,
+                    "context": null,
+                    "discount": null,
+                    "startdate": null,
+                    "enddate": null,
+                    "total": "0"
+                },
+                {
+                    "id": "19",
+                    "stateid": "3",
+                    "address": "wdabed",
+                    "buyDatetime": "2021-01-11 08:04:55",
+                    "memberid": "29",
+                    "couponid": "17",
+                    "phone": "091223",
+                    "hash": "www",
+                    "context": "abed",
+                    "discount": "0.7",
+                    "startdate": "2020-01-06",
+                    "enddate": "2020-01-07",
+                    "total": "2499"
+                }
+            ]
+        ./shoppinglist/listid/{shoppingListId}
+        response:
+        [
+            {
+                "id": "40",
+                "quantity": "2",
+                "shoppingListId": "13",
+                "gameId": "40",
+                "name": "DEATH STRANDING",
+                "price": "1790",
+                "picture": "https://steamcdn-a.akamaihd.net/steam/apps/1190460/header.jpg?t=1608719152",
+                "description": "From legendary game creator Hideo Kojima comes an all-new, genre-defying experience. Sam Bridges must brave a world utterly transformed by the Death Stranding. Carrying the disconnected remnants of our future in his hands, he embarks on a journey to reconnect the shattered world one step at a time.",
+                "tagId": "9",
+                "recommend": "0",
+                "tag": "abc"
+            },
+            {
+                "id": "1",
+                "quantity": "3",
+                "shoppingListId": "13",
+                "gameId": "1",
+                "name": "Gris",
+                "price": "300",
+                "picture": "https://cdn.cloudflare.steamstatic.com/steam/apps/683320/header.jpg?t=1574359986",
+                "description": "Gris是一個充滿希望的小姑娘，她由於生活中痛苦的經歷而迷失在自己的世界裡。",
+                "tagId": "1",
+                "recommend": "0",
+                "tag": "action"
+            }
+        ]
+    - update
+        ./shoppinglist/{id}
+            [{
+                stateid:3 //(完成訂單)
+            }]
+        ./shoppinglist/finish
+            [{
+                "address":"st."
+            }]
+    - delete
+        ./shoppinglist/{id}
+member
+    -post
+        ./member/login
+            [{
+                uid:
+            }]
+            response:
+            [{
+                id
+                ismanager
+            }]
+    -patch
+        ./member
+            [{
+                address:
+            }]
+            response:
+            [{
+                id
+                ismanager
+            }]
+
+coupon
+    -select
+	./coupon
+	response:
+		all coupon
+	./coupon/{hash}
+	response:
+		target coupon
+    -insert
+	./coupon
+	request:
+	    {
+		startdate:(date),
+        enddate:(date)
+		context:(varchar)
+		discount:(float)
+	    }
+	response:
+	    insert_id
+    -delete
+	./coupon/{hash}
+
+havecoupon
+    -select
+	./havecoupon
+	response:
+	    all coupon that current user have
+	./havecoupon/{shoppinglistId}/{couponId}
+	response:
+	    total price
+    -insert
+	./havecoupon/{couponid}/{memberid}
+	response:
+	    insert_id
+    -delete
+	./havecoupon/{id}
+search
+    -search hot (get)
+    ./search/hot/{how many} ex:./search/hot/5  (搜尋前5個，全部就不填)
+    -search recommend (get) 
+    ./search/recommend/{how many} ex:./search/recommend/5  (搜尋前5個)
+    -search starest (get) 搜尋star最高
+    ./search/starest/{how many} ex:./search/starest/5  (搜尋前5個，全部就不填)
+     -search newest (get) 搜尋最新
+    ./search/newest/{how many} ex:./search/newest/5  (搜尋前5個，全部就不填)
+    -search(post)
+    ./search
+    request:
+    [{
+        name:'abc a b' (abc or a or b) 
+        //name:'abc+a+b c'(abc and a and b or c)
+        tag:[1,2,3] or [1]  (tag id) (array)
+    }]
+    response:
+    [
+    {
+        "id": "1",
+        "name": "Gris",
+        "price": "310",
+        "picture": "https://cdn.cloudflare.steamstatic.com/steam/apps/683320/header.jpg?t=1574359986",
+        "description": "Gris是一個充滿希望的小姑娘，她由於生活中痛苦的經歷而迷失在自己的世界裡。",
+        "tag": "模擬",
+        "soldOutNumber": "0",
+        "star": "0.0"
+    },
+    {
+        "id": "2",
+        "name": "Hollow Knight",
+        "price": "350",
+        "picture": "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg?t=1601950406",
+        "description": "Forge your own path in Hollow Knight! An epic action adventure through a vast ruined kingdom of insects and heroes. Explore twisting caverns, battle tainted creatures and befriend bizarre bugs, all in a classic, hand-drawn 2D style.",
+        "tag": "action",
+        "soldOutNumber": "5",
+        "star": "0.0"
+    }
+    ]
+tag
+ select 
+    request
+    [{
+        id:1
+        name:"action"
+    },
+    {
+        id:2
+        name:"action"
+    }]
+ insert
+    require
+    [{
+        name:"bc"
+    }]
+    request
+    [{
+        id:3
+    }]
+ update /id
+    require
+    [{
+        name:"bc"
+    }]
+    request
+    [{
+        id:3
+    }]
+ delete /id
+
+todo:
+    cupon shoppinglist 要存取使用了哪張優惠券
+
+    v member 自動輸入memberid address  (username:uid，password:token)
+    (結帳、登入、購物車、優惠券、評論、願望清單)
+    
+    v picture game 更多圖片
+    v驗證使用者是否有買這款遊戲
